@@ -1,3 +1,6 @@
+#Forked and modified to support openshift arbitrary uid constraint.
+
+
 # Grafana Docker image
 
 This project builds a Docker image with the latest master build of Grafana.
