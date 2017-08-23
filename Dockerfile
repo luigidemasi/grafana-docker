@@ -28,7 +28,7 @@ RUN curl -O   https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafan
     mv grafana/conf /etc/grafana && \
     mkdir {/var/lib/grafana,/var/log/grafana} && \
     chgrp -R 0 /var/lib/grafana /var/log/grafana /etc/grafana && \
-    chmod -R g=u /some/directory && \
+    chmod -R g=u /var/lib/grafana /var/log/grafana /etc/grafana && \
     chmod g=u /etc/passwd
 
 VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
