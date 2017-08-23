@@ -1,16 +1,13 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
 
 : "${GF_PATHS_DATA:=/var/lib/grafana}"
 : "${GF_PATHS_LOGS:=/var/log/grafana}"
 : "${GF_PATHS_PLUGINS:=/var/lib/grafana/plugins}"
 
-chown -R grafana:grafana "$GF_PATHS_DATA" "$GF_PATHS_LOGS"
-chown -R grafana:grafana /etc/grafana
-
 
 if ! whoami &> /dev/null; then
   if [ -w /etc/passwd ]; then
-    echo "${USER_NAME:-default}:x:$(id -u):0:${USER_NAME:-default} user:${HOME}:/sbin/nologin" >> /etc/passwd
+    echo "${USER_NAME:-grafana}:x:$(id -u):0:${USER_NAME:-grafana} user:${HOME:-/grafana}:/sbin/nologin" >> /etc/passwd
   fi
 fi
 
@@ -24,7 +21,7 @@ if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then
   done
 fi
 
-exec grafana /usr/sbin/grafana-server      \
+  exec ${GRAFANA_ROOT}/bin/grafana-server       \
   --homepath=/usr/share/grafana                 \
   --config=/etc/grafana/grafana.ini             \
   cfg:default.log.mode="console"                \
