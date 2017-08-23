@@ -1,4 +1,4 @@
-#Forked and modified to support openshift arbitrary uid constraint.
+# Forked and modified to support openshift arbitrary uid constraint.
 
 
 # Grafana Docker image
