@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 : "${GF_PATHS_DATA:=/var/lib/grafana}"
 : "${GF_PATHS_LOGS:=/var/log/grafana}"
 : "${GF_PATHS_PLUGINS:=/var/lib/grafana/plugins}"
@@ -21,8 +23,9 @@ if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then
   done
 fi
 
+
   exec ${GRAFANA_ROOT}/bin/grafana-server       \
-  --homepath=/usr/share/grafana                 \
+  --homepath=${GRAFANA_ROOT}                 \
   --config=/etc/grafana/grafana.ini             \
   cfg:default.log.mode="console"                \
   cfg:default.paths.data="$GF_PATHS_DATA"       \
