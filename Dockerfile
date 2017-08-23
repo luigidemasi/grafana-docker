@@ -24,10 +24,11 @@ EXPOSE 3000
 
 COPY ./run.sh /run.sh
 
-RUN curl -O   https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.3.linux-x64.tar.gz && \
+RUN curl -O https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.3.linux-x64.tar.gz && \
     tar -xvf grafana-4.4.3.linux-x64.tar.gz && \
     mv grafana-4.4.3 grafana && \
     cp -r  grafana/conf /etc/grafana && \
+    cp /etc/grafana/sample.ini /etc/grafana/grafana.ini && \
     mkdir {/var/lib/grafana,/var/log/grafana} && \
     chgrp -R 0 /var/lib/grafana /var/log/grafana /etc/grafana && \
     chmod -R g+rwx /var/lib/grafana /var/log/grafana /etc/grafana && \
