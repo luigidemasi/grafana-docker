@@ -15,7 +15,8 @@ LABEL name="ldm/grafana-arbitrary-uid" \
       io.openshift.expose-services="" \
 io.openshift.tags="grafana,monitoring,visualization,starter-arbitrary-uid,starter,arbitrary,uid"
 
-VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
+ENV GRAFANA_ROOT=/grafana
+ENV PATH=${GRAFANA_ROOT}/bin:${PATH} HOME=${GRAFANA_ROOT}
 
 EXPOSE 3000
 
@@ -24,10 +25,13 @@ COPY ./run.sh /run.sh
 RUN curl -O   https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.3.linux-x64.tar.gz && \
     tar -xvf grafana-4.4.3.linux-x64.tar.gz && \
     mv grafana-4.4.3 grafana && \
-    mkdir {/var/lib/grafana,/var/log/grafana, /etc/grafana} && \
+    mv grafana/conf /etc/grafana && \
+    mkdir {/var/lib/grafana,/var/log/grafana} && \
     chgrp -R 0 /var/lib/grafana /var/log/grafana /etc/grafana && \
     chmod -R g=u /some/directory && \
     chmod g=u /etc/passwd
+
+VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
 
 ENTRYPOINT ["/run.sh"]
 
